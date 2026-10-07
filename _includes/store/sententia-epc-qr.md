@@ -61,7 +61,7 @@ Automatisch eingefügt wird der Code in HTML-basierten Vorlagen (`.pdf.twig`, `.
 
 ## Lizenz und Domain
 
-Der Lizenzschlüssel ist an genau eine (Sub-)Domain Ihrer Kimai-Installation gebunden (z. B. `kimai.example.com`) und ein Jahr gültig. Läuft Kimai hinter einem Reverse Proxy, Load Balancer oder in Docker, muss der Proxy in Kimai als vertrauenswürdig eingetragen sein (`TRUSTED_PROXIES` / `TRUSTED_HOSTS`) – sonst sieht Kimai einen internen Hostnamen und die Lizenzprüfung schlägt fehl. Die Warnung in den Einstellungen zeigt den erkannten Hostnamen an.
+Der Lizenzschlüssel ist an genau eine (Sub-)Domain Ihrer Kimai-Installation gebunden (z. B. `kimai.example.com`) und ein Jahr gültig. Die Lizenz verlängert sich automatisch um ein Jahr, sofern sie nicht spätestens einen Monat vor Ablauf per E-Mail an office@sententia.at gekündigt wird; mit jeder Verlängerung erhalten Sie einen neuen Schlüssel. Läuft Kimai hinter einem Reverse Proxy, Load Balancer oder in Docker, muss der Proxy in Kimai als vertrauenswürdig eingetragen sein (`TRUSTED_PROXIES` / `TRUSTED_HOSTS`) – sonst sieht Kimai einen internen Hostnamen und die Lizenzprüfung schlägt fehl. Die Warnung in den Einstellungen zeigt den erkannten Hostnamen an.
 
 ## Support
 
@@ -130,7 +130,7 @@ The code is injected automatically into HTML-based templates (`.pdf.twig`, `.htm
 
 ## License and domain
 
-The license key is bound to exactly one (sub)domain of your Kimai installation (e.g. `kimai.example.com`) and valid for one year. If Kimai runs behind a reverse proxy, a load balancer or in Docker, the proxy must be trusted by Kimai (`TRUSTED_PROXIES` / `TRUSTED_HOSTS`) - otherwise Kimai sees an internal host name and the license check fails. The warning on the settings screen shows the host name Kimai detected.
+The license key is bound to exactly one (sub)domain of your Kimai installation (e.g. `kimai.example.com`) and valid for one year. It renews automatically for one year unless canceled by e-mail to office@sententia.at at least one month before it expires; with every renewal you receive a new key. If Kimai runs behind a reverse proxy, a load balancer or in Docker, the proxy must be trusted by Kimai (`TRUSTED_PROXIES` / `TRUSTED_HOSTS`) - otherwise Kimai sees an internal host name and the license check fails. The warning on the settings screen shows the host name Kimai detected.
 
 ## Support
 
