@@ -319,3 +319,21 @@ leadmetrix:
     homepage: https://www.leadmetrix.com
     github: https://github.com/leadmetrixcom
     email: support@leadmetrix.com
+sententia:
+    name: Sententia GmbH
+    description: Austrian software company building web applications, native apps and Kimai plugins.
+    image: https://www.sententia.at/images/favicon/ms-icon-310x310.png
+    homepage: https://www.sententia.at
+    email: office@sententia.at
+    location: Thalgau, Austria
+    purchase_details:
+        - title: How is the plugin licensed?
+          content: 'The plugin is sold as an annual subscription. With your purchase you receive the plugin download and a license key, which is valid for one year and bound to one (sub)domain of your Kimai installation (e.g. `kimai.example.com`). The license check runs completely offline - there is no phone-home and no external service.'
+        - title: What happens when my subscription ends?
+          content: 'The license key carries an expiry date. When it has expired, the plugin stops adding QR codes to new invoices - invoices are still created as usual, just without the QR code - and administrators see a notice on the invoice and settings screens. Renew your subscription to receive a new key; no reinstallation is needed.'
+        - title: Why does Kimai say the license is not valid for my domain?
+          content: 'The key is bound to the host name of your Kimai installation. If Kimai runs behind a reverse proxy, a load balancer or in a Docker container, Kimai must be configured to trust that proxy (`TRUSTED_PROXIES` and `TRUSTED_HOSTS`), otherwise it sees an internal host name such as `localhost` or the container name. The warning on the settings screen shows the host name Kimai detected - send it to us if you need a key for an additional or changed domain.'
+        - title: Where can I buy this plugin?
+          content: 'Order online at <a href="https://www.sententia.at/kimai-epc-qr/" target="_blank">sententia.at</a> - you instantly receive the plugin, your license key and the invoice by e-mail, and pay by bank transfer within 14 days. We sell to businesses only; EU customers with a valid VAT ID are invoiced with reverse charge.'
+        - title: Where can I get support for this plugin?
+          content: 'Support questions, bug reports and feature requests can be sent to <a href="mailto:office@sententia.at">office@sententia.at</a>. Please include your Kimai version and the plugin version (System > Plugins).'

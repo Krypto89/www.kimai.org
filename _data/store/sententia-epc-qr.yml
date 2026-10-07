@@ -1,0 +1,12 @@
+developer: sententia
+icon: fas fa-qrcode
+subscription: 29 €
+shop: https://www.sententia.at/kimai-epc-qr/
+changelog: true
+tags: [plugin]
+bundle:
+    name: "EpcQrBundle"
+screenshots:
+    - sententia-epc-qr0
+    - sententia-epc-qr1
+    - sententia-epc-qr2

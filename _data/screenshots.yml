@@ -260,3 +260,9 @@ leadmetrix-custom-reports1:
     src: "/images/marketplace/leadmetrix/leadmetrix-custom-reports-1.webp"
 leadmetrix-custom-reports2:
     src: "/images/marketplace/leadmetrix/leadmetrix-custom-reports-2.webp"
+sententia-epc-qr0:
+    src: "/images/marketplace/sententia/epc-qr-invoice.webp"
+sententia-epc-qr1:
+    src: "/images/marketplace/sententia/epc-qr-settings.webp"
+sententia-epc-qr2:
+    src: "/images/marketplace/sententia/epc-qr-template.webp"

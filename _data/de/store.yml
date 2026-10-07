@@ -173,6 +173,9 @@ items:
     leadmetrix-custom-reports:
         title: Custom Reports
         intro: Advanced reporting with multi-customer filtering, budget tracking, saved presets and CSV/PDF export.
+    sententia-epc-qr:
+        title: EPC QR-Code für Rechnungen
+        intro: Fügt Ihren PDF- und HTML-Rechnungen einen SEPA-QR-Code (GiroCode) zum Bezahlen per Scan hinzu.
 screenshots:
     expenses-bundle4:
         description: Sie können einen Namen, den Kostenfaktor und einen kurzen Hilfetext für jede Kategorie vergeben
@@ -386,3 +389,9 @@ screenshots:
         description: Saved report presets panel
     leadmetrix-custom-reports0:
         description: Multi-customer report with budget progress bars
+    sententia-epc-qr0:
+        description: PDF-Rechnung mit EPC-QR-Code - mit jeder Banking-App scannen und bezahlen
+    sententia-epc-qr1:
+        description: Einstellungen für Bankverbindung, Verwendungszweck, QR-Größe und Lizenzschlüssel
+    sententia-epc-qr2:
+        description: Optionale IBAN und BIC je Rechnungsvorlage für mehrere Bankkonten

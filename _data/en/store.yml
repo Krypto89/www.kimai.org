@@ -173,6 +173,9 @@ items:
     leadmetrix-custom-reports:
         title: Custom Reports
         intro: Advanced reporting with multi-customer filtering, budget tracking, saved presets and CSV/PDF export.
+    sententia-epc-qr:
+        title: EPC QR-Code for Invoices
+        intro: Add a scan-to-pay SEPA QR code (GiroCode) to your PDF and HTML invoices.
 screenshots:
     katjaglass-approval-bundle0:
         description: Displays week details like working time, expected time and actions like submit for approval
@@ -386,3 +389,9 @@ screenshots:
         description: Single customer filtered view with drill-down entries
     leadmetrix-custom-reports2:
         description: Saved report presets panel
+    sententia-epc-qr0:
+        description: PDF invoice with the EPC QR code - scan it with any banking app to pay
+    sententia-epc-qr1:
+        description: Settings for bank account, remittance text, QR size and license key
+    sententia-epc-qr2:
+        description: Optional IBAN and BIC per invoice template for multiple bank accounts
