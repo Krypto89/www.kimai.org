@@ -33,6 +33,7 @@ Eine Datenbank-Migration ist nicht nötig. Das Plugin erscheint danach unter **S
 
 1. **System > Einstellungen > EPC QR-Code**: Lizenzschlüssel eintragen. Das ist die einzige globale Einstellung.
 2. **Rechnungen > Vorlagen**: in jeder Vorlage, deren Rechnungen einen QR-Code bekommen sollen, das Feld **EPC QR: IBAN** ausfüllen (**EPC QR: BIC** ist optional).
+   Optional: **EPC QR: Zahlungszweck (SEPA-Code)** – eine durchsuchbare Liste aller ISO-20022-Zahlungszwecke, die für Kimai-Rechnungen passenden zuerst (z. B. `SCVE` für Dienstleistungen). Die meisten Banking-Apps zeigen den Code nicht an, er wird mit der Überweisung übermittelt. Wer ihn nicht braucht, lässt „Kein Code“ stehen.
 
 Fertig. Der QR-Code enthält:
 
@@ -41,6 +42,7 @@ Fertig. Der QR-Code enthält:
 | Empfänger | Rechnungssteller der Vorlage (Firma bzw. Name), sonst das Feld „Firma“ der Vorlage |
 | IBAN / BIC | aus der Rechnungsvorlage |
 | Betrag | Rechnungssumme in EUR |
+| Zahlungszweck (SEPA-Code) | optional, aus der Rechnungsvorlage |
 | Verwendungszweck | Rechnungsnummer |
 
 **Wann fehlt der QR-Code?** Wenn in der Vorlage keine gültige IBAN steht, die Rechnung nicht in EUR ausgestellt ist, die Summe 0 beträgt oder der Lizenzschlüssel fehlt, abgelaufen oder für die Domain ungültig ist. Die Rechnung wird dann unverändert erstellt.
@@ -69,6 +71,7 @@ Wer die Position oder Gestaltung selbst bestimmen möchte, nutzt die folgenden V
 | `invoice['epc_qr.bic']` | BIC, leer wenn in der Vorlage keiner hinterlegt ist | |
 | `invoice['epc_qr.amount']` | Betrag, formatiert wie die Rechnungssumme | 216,00 € |
 | `invoice['epc_qr.reference']` | Verwendungszweck (die Rechnungsnummer) | K2026/00011 |
+| `invoice['epc_qr.purpose']` | SEPA-Zahlungszweck, leer wenn keiner gesetzt ist | SCVE |
 | `invoice['epc_qr.html']` | Die fertige Karte | |
 
 Das sind genau die Werte, die im QR-Code stehen – was auf der Rechnung steht, liest auch die Banking-App. Sie stammen nicht aus dem Freitextfeld für die Bankverbindung der Vorlage. Alle Variablen sind leer, wenn kein QR-Code gedruckt wird (keine IBAN in der Vorlage, Rechnung nicht in EUR, Summe 0, keine gültige Lizenz). Umschließen Sie Ihre Gestaltung deshalb mit der Abfrage aus dem Beispiel.
@@ -147,6 +150,7 @@ No database migration is required. The plugin then shows up in **System > Plugin
 
 1. **System > Settings > EPC QR-Code**: enter the license key. This is the only global setting.
 2. **Invoices > Templates**: fill in **EPC QR: IBAN** on every template whose invoices should get a QR code (**EPC QR: BIC** is optional).
+   Optional: **EPC QR: purpose code (SEPA)** - a searchable list of all ISO 20022 purpose codes, the ones that fit Kimai invoices first (e.g. `SCVE` for services). Most banking apps do not show the code, it is passed on with the transfer. Leave it at "No code" if you do not need it.
 
 That's it. The QR code contains:
 
@@ -155,6 +159,7 @@ That's it. The QR code contains:
 | Beneficiary | Invoice issuer of the template (company or name), otherwise the template's "Company" field |
 | IBAN / BIC | from the invoice template |
 | Amount | invoice total in EUR |
+| Purpose code | optional, from the invoice template |
 | Remittance | invoice number |
 
 **When is the QR code missing?** When the template has no valid IBAN, the invoice currency is not EUR, the invoice total is 0, or the license key is missing, expired or not valid for the domain. The invoice is then created unchanged.
@@ -183,6 +188,7 @@ To place or design it yourself, use the variables below in your Twig invoice tem
 | `invoice['epc_qr.bic']` | BIC, empty if none is set on the template | |
 | `invoice['epc_qr.amount']` | Amount, formatted like the invoice total | 216,00 € |
 | `invoice['epc_qr.reference']` | Remittance text (the invoice number) | K2026/00011 |
+| `invoice['epc_qr.purpose']` | SEPA purpose code, empty if none is set | SCVE |
 | `invoice['epc_qr.html']` | The ready-made card | |
 
 These are exactly the values encoded in the QR code - what the invoice shows is what the banking app reads. They do not come from the free-text bank details of the template. All variables are empty when no QR code is printed (no IBAN on the template, invoice not in EUR, total of 0, no valid license), so wrap your design in the check shown below.
