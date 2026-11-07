@@ -41,11 +41,13 @@ Fertig. Der QR-Code enthält:
 | --- | --- |
 | Empfänger | Rechnungssteller der Vorlage (Firma bzw. Name), sonst das Feld „Firma“ der Vorlage |
 | IBAN / BIC | aus der Rechnungsvorlage |
-| Betrag | Rechnungssumme in EUR |
+| Betrag | Rechnungssumme in EUR (der EPC-QR-Code ist im Standard auf Euro festgelegt) |
 | Zahlungszweck (SEPA-Code) | optional, aus der Rechnungsvorlage |
 | Verwendungszweck | Rechnungsnummer |
 
 **Wann fehlt der QR-Code?** Wenn in der Vorlage keine gültige IBAN steht, die Rechnung nicht in EUR ausgestellt ist, die Summe 0 beträgt oder der Lizenzschlüssel fehlt, abgelaufen oder für die Domain ungültig ist. Die Rechnung wird dann unverändert erstellt.
+
+**Andere Währungen?** Der EPC-QR-Code (EPC069-12) ist ein Standard für SEPA-Überweisungen und erlaubt ausschließlich Euro – Banking-Apps lehnen Codes mit anderen Währungen ab. Für Rechnungen in CHF, USD, GBP usw. wird deshalb kein QR-Code gedruckt; die Rechnung bleibt unverändert.
 
 ## Platzierung und Gestaltung
 
@@ -63,16 +65,17 @@ Wer die Position oder Gestaltung selbst bestimmen möchte, nutzt die folgenden V
 
 **Eigene Gestaltung** – der QR-Code und seine Zahlungsdaten stehen als Variablen zur Verfügung:
 
-| Variable | Inhalt | Beispiel |
-| --- | --- | --- |
-| `invoice['epc_qr.image']` | QR-Code als Bild (SVG-Data-URI), für `<img src="...">` | |
-| `invoice['epc_qr.recipient']` | Empfänger | Sententia GmbH |
-| `invoice['epc_qr.iban']` | IBAN in Viererblöcken | AT71 4501 0001 0926 0612 |
-| `invoice['epc_qr.bic']` | BIC, leer wenn in der Vorlage keiner hinterlegt ist | |
-| `invoice['epc_qr.amount']` | Betrag, formatiert wie die Rechnungssumme | 216,00 € |
-| `invoice['epc_qr.reference']` | Verwendungszweck (die Rechnungsnummer) | K2026/00011 |
-| `invoice['epc_qr.purpose']` | SEPA-Zahlungszweck, leer wenn keiner gesetzt ist | SCVE |
-| `invoice['epc_qr.html']` | Die fertige Karte | |
+| Variable | Inhalt<br><span class="text-muted fs-sm">Beispiel</span> |
+| --- | --- |
+| `invoice['epc_qr.image']` | QR-Code als Bild (SVG-Data-URI), für `<img src="...">` |
+| `invoice['epc_qr.recipient']` | Empfänger<br><span class="text-muted fs-sm">Sententia GmbH</span> |
+| `invoice['epc_qr.iban']` | IBAN in Viererblöcken<br><span class="text-muted fs-sm">AT71 4501 0001 0926 0612</span> |
+| `invoice['epc_qr.bic']` | BIC, leer wenn in der Vorlage keiner hinterlegt ist |
+| `invoice['epc_qr.amount']` | Betrag, formatiert wie die Rechnungssumme<br><span class="text-muted fs-sm">216,00 €</span> |
+| `invoice['epc_qr.reference']` | Verwendungszweck (die Rechnungsnummer)<br><span class="text-muted fs-sm">K2026/00011</span> |
+| `invoice['epc_qr.purpose']` | SEPA-Zahlungszweck, leer wenn keiner gesetzt ist<br><span class="text-muted fs-sm">SCVE</span> |
+| `invoice['epc_qr.html']` | Die fertige Karte |
+{: .mb-5}
 
 Das sind genau die Werte, die im QR-Code stehen – was auf der Rechnung steht, liest auch die Banking-App. Sie stammen nicht aus dem Freitextfeld für die Bankverbindung der Vorlage. Alle Variablen sind leer, wenn kein QR-Code gedruckt wird (keine IBAN in der Vorlage, Rechnung nicht in EUR, Summe 0, keine gültige Lizenz). Umschließen Sie Ihre Gestaltung deshalb mit der Abfrage aus dem Beispiel.
 
@@ -158,11 +161,13 @@ That's it. The QR code contains:
 | --- | --- |
 | Beneficiary | Invoice issuer of the template (company or name), otherwise the template's "Company" field |
 | IBAN / BIC | from the invoice template |
-| Amount | invoice total in EUR |
+| Amount | invoice total in EUR (the EPC QR code standard is defined for euro only) |
 | Purpose code | optional, from the invoice template |
 | Remittance | invoice number |
 
 **When is the QR code missing?** When the template has no valid IBAN, the invoice currency is not EUR, the invoice total is 0, or the license key is missing, expired or not valid for the domain. The invoice is then created unchanged.
+
+**Other currencies?** The EPC QR code (EPC069-12) is a standard for SEPA credit transfers and only allows euro - banking apps reject codes in any other currency. Invoices in CHF, USD, GBP etc. therefore get no QR code and stay unchanged.
 
 ## Placement and styling
 
@@ -180,16 +185,17 @@ To place or design it yourself, use the variables below in your Twig invoice tem
 
 **Your own design** - the QR code and its payment data are available as variables:
 
-| Variable | Content | Example |
-| --- | --- | --- |
-| `invoice['epc_qr.image']` | QR code as image (SVG data URI), for `<img src="...">` | |
-| `invoice['epc_qr.recipient']` | Beneficiary | Sententia GmbH |
-| `invoice['epc_qr.iban']` | IBAN in blocks of four | AT71 4501 0001 0926 0612 |
-| `invoice['epc_qr.bic']` | BIC, empty if none is set on the template | |
-| `invoice['epc_qr.amount']` | Amount, formatted like the invoice total | 216,00 € |
-| `invoice['epc_qr.reference']` | Remittance text (the invoice number) | K2026/00011 |
-| `invoice['epc_qr.purpose']` | SEPA purpose code, empty if none is set | SCVE |
-| `invoice['epc_qr.html']` | The ready-made card | |
+| Variable | Content<br><span class="text-muted fs-sm">Example</span> |
+| --- | --- |
+| `invoice['epc_qr.image']` | QR code as image (SVG data URI), for `<img src="...">` |
+| `invoice['epc_qr.recipient']` | Beneficiary<br><span class="text-muted fs-sm">Sententia GmbH</span> |
+| `invoice['epc_qr.iban']` | IBAN in blocks of four<br><span class="text-muted fs-sm">AT71 4501 0001 0926 0612</span> |
+| `invoice['epc_qr.bic']` | BIC, empty if none is set on the template |
+| `invoice['epc_qr.amount']` | Amount, formatted like the invoice total<br><span class="text-muted fs-sm">216,00 €</span> |
+| `invoice['epc_qr.reference']` | Remittance text (the invoice number)<br><span class="text-muted fs-sm">K2026/00011</span> |
+| `invoice['epc_qr.purpose']` | SEPA purpose code, empty if none is set<br><span class="text-muted fs-sm">SCVE</span> |
+| `invoice['epc_qr.html']` | The ready-made card |
+{: .mb-5}
 
 These are exactly the values encoded in the QR code - what the invoice shows is what the banking app reads. They do not come from the free-text bank details of the template. All variables are empty when no QR code is printed (no IBAN on the template, invoice not in EUR, total of 0, no valid license), so wrap your design in the check shown below.
 

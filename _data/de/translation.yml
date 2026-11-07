@@ -39,6 +39,7 @@ store-features: Funktionen
 store-purchase: Kaufen
 store-buy-button: Jetzt kaufen
 store-payment-methods: Verfügbare Zahlungsmethoden
+store-payment-sepa: EPC-QR-Code / SEPA-Überweisung
 store-offered-by: Angeboten von
 store-plugins-onpremise: Plugins sind für On-Premise-Kunden gedacht, Cloud-Benutzer haben Zugriff auf die mit %cloud% gekennzeichneten Plugins
 price-without-vat: ohne MwSt.

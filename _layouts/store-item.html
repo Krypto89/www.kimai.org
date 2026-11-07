@@ -225,6 +225,12 @@ shopping: article
                                 <div class="col-auto">
                                     {{ site.data[page.lang].translation.store-payment-methods }}
                                 </div>
+                                {% if settings.payment_methods == 'sepa' %}
+                                <div class="col-auto ms-auto">
+                                    <i class="bx bx-qr fs-lg align-middle me-1"></i>
+                                    {{ site.data[page.lang].translation.store-payment-sepa | default: site.data.en.translation.store-payment-sepa }}
+                                </div>
+                                {% else %}
                                 <div class="col-auto ms-auto fs-lg">
                                     <i class="bx bxl-paypal"></i>
                                     <i class="bx bxl-google"></i>
@@ -232,6 +238,7 @@ shopping: article
                                     <i class="bx bxl-visa"></i>
                                     <i class="bx bxl-mastercard"></i>
                                 </div>
+                                {% endif %}
                             </div>
                             {% endif %}
 
@@ -450,7 +457,11 @@ shopping: article
 
 <section class="container py-lg-4 py-xl-5 mt-3 mb-5">
     <div class="row g-0 bg-dark bg-repeat-0 bg-position-center border rounded-3 overflow-hidden" style="background-image: url(/images/layout/author-pattern.svg);">
+        {% if developer.logo %}
+        <div class="col-md-5 bg-repeat-0 bg-position-center" style="background-image: url({{ developer.logo }}); background-size: 45% auto; min-height: 220px;"></div>
+        {% else %}
         <div class="col-md-5 bg-repeat-0 bg-position-top-center bg-size-cover" style="background-image: url({{ developer.image }}); min-height: 350px;"></div>
+        {% endif %}
         <div class="col-md-7 py-xl-5 px-4">
             <div class="py-5 mx-auto" style="max-width: 530px;">
                 <div class="fs-xl text-light opacity-50 mb-2">{{ site.data[page.lang].translation.store-offered-by }}</div>

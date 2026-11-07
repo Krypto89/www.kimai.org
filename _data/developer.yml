@@ -335,7 +335,8 @@ leadmetrix:
 sententia:
     name: Sententia GmbH
     description: Austrian software company building web applications, native apps and Kimai plugins.
-    image: https://www.sententia.at/images/favicon/ms-icon-310x310.png
+    image: /images/marketplace/sententia/sententia-avatar.svg
+    logo: /images/marketplace/sententia/sententia-logo.svg
     homepage: https://www.sententia.at
     email: office@sententia.at
     location: Thalgau, Austria
