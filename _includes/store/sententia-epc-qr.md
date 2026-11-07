@@ -3,12 +3,11 @@ Fügen Sie Ihren Kimai-Rechnungen einen **EPC-QR-Code** (SEPA-Überweisung, auch
 
 ## Funktionen
 
-- QR-Code auf PDF- und HTML-Rechnungen, inklusive Vorschau – **ohne Änderung Ihrer Rechnungsvorlagen**
+- Gerahmter „Scannen und bezahlen“-Block direkt **unter der Rechnungssumme** – auf PDF- und HTML-Rechnungen, inklusive Vorschau, **ohne Änderung Ihrer Rechnungsvorlagen**
+- Beschriftung in der Sprache der Rechnungsvorlage (Deutsch, Englisch, Französisch, Italienisch, Spanisch, Niederländisch, Polnisch, Tschechisch und 21 weitere, sonst Englisch)
+- **Bankkonto je Rechnungsvorlage** – mehrere Bankkonten ohne Zusatzaufwand, Vorlagen ohne IBAN bleiben unverändert
 - Standardkonformer Inhalt nach EPC069-12 Version 002, gestochen scharf als SVG
-- Bankverbindung zentral in den Einstellungen, optional **eigene IBAN/BIC je Rechnungsvorlage** (mehrere Bankkonten)
-- Konfigurierbarer Verwendungszweck (z. B. `Rechnung {invoice.number}`), SEPA-Purpose-Code und QR-Größe
-- Freie Platzierung per Marker `<!-- epc-qr -->` oder Twig-Variable `invoice['epc_qr.image']`
-- Standardmäßig deaktiviert, nur aktiv für EUR-Rechnungen mit gültiger IBAN
+- Volle Kontrolle im Template: den Block an beliebiger Stelle ausgeben, oder nur den nackten QR-Code und ihn selbst gestalten
 - Offline-Lizenzprüfung – keine Verbindung zu externen Diensten
 
 ## Voraussetzungen
@@ -32,32 +31,43 @@ Eine Datenbank-Migration ist nicht nötig. Das Plugin erscheint danach unter **S
 
 ## Einrichtung
 
-Öffnen Sie **System > Einstellungen > EPC QR-Code**:
+1. **System > Einstellungen > EPC QR-Code**: Lizenzschlüssel eintragen. Das ist die einzige globale Einstellung.
+2. **Rechnungen > Vorlagen**: in jeder Vorlage, deren Rechnungen einen QR-Code bekommen sollen, das Feld **EPC QR: IBAN** ausfüllen (**EPC QR: BIC** ist optional).
 
-| Einstellung | Beschreibung |
+Fertig. Der QR-Code enthält:
+
+| Feld | Wert |
 | --- | --- |
-| EPC QR-Code auf Rechnungen anzeigen | Hauptschalter, standardmäßig aus |
-| IBAN | Empfängerkonto. Kann leer bleiben, wenn die IBAN in der Rechnungsvorlage gesetzt ist |
-| BIC | Optional (für SEPA seit 2016 nicht mehr nötig) |
-| Empfängername | Leer = Name des Rechnungsstellers aus der Rechnungsvorlage |
-| SEPA-Verwendungszweck-Code | Optional, 4 Buchstaben, z. B. `SCVE` für Dienstleistungen |
-| Verwendungszweck | `{invoice.number}` wird durch die Rechnungsnummer ersetzt |
-| QR-Code-Größe | In Pixel, Standard 160 |
-| Lizenzschlüssel | Der Schlüssel aus Ihrem Kauf |
+| Empfänger | Rechnungssteller der Vorlage (Firma bzw. Name), sonst das Feld „Firma“ der Vorlage |
+| IBAN / BIC | aus der Rechnungsvorlage |
+| Betrag | Rechnungssumme in EUR |
+| Verwendungszweck | Rechnungsnummer |
 
-**Mehrere Bankkonten:** Unter **Rechnungen > Vorlagen** hat jede Vorlage die Felder **EPC QR: IBAN** und **EPC QR: BIC**. Sind sie ausgefüllt, gelten sie für alle Rechnungen mit dieser Vorlage.
+**Wann fehlt der QR-Code?** Wenn in der Vorlage keine gültige IBAN steht, die Rechnung nicht in EUR ausgestellt ist oder der Lizenzschlüssel fehlt, abgelaufen oder für die Domain ungültig ist. Die Rechnung wird dann unverändert erstellt.
 
-**Platzierung:** Ohne weitere Anpassung wird der QR-Code am Ende der Rechnung eingefügt. Setzen Sie `<!-- epc-qr -->` an die gewünschte Stelle Ihrer Twig-Vorlage, oder geben Sie das Bild selbst aus:
+## Platzierung und Gestaltung
+
+Ohne Anpassung erscheint der Block rechtsbündig unter der Tabelle mit der Rechnungssumme (bzw. am Ende der Rechnung, wenn die Vorlage keine solche Tabelle hat). Wer es anders möchte, steuert das in der Twig-Vorlage:
+
+**Block an anderer Stelle** – an der gewünschten Stelle einfügen:
+
+```twig
+{% raw %}{{ invoice['epc_qr.html']|raw }}{% endraw %}
+```
+
+(oder den Marker `<!-- epc-qr -->`, der automatisch ersetzt wird)
+
+**Nur der QR-Code, ohne Rahmen** – Größe, Position und Beschriftung bestimmen Sie selbst:
 
 ```twig
 {% raw %}{% if invoice['epc_qr.image'] is not empty %}
-    <img src="{{ invoice['epc_qr.image'] }}" width="160" height="160" alt="EPC QR-Code">
+    <img src="{{ invoice['epc_qr.image'] }}" width="110" height="110" alt="EPC QR-Code">
 {% endif %}{% endraw %}
 ```
 
-Automatisch eingefügt wird der Code in HTML-basierten Vorlagen (`.pdf.twig`, `.html.twig`). DOCX-, ODS- und XLSX-Vorlagen werden nicht verändert.
+Sobald die Vorlage den Block oder den QR-Code selbst ausgibt, fügt das Plugin nichts mehr automatisch hinzu. Die Variablen sind leer, wenn kein QR-Code gedruckt wird. Lassen Sie um den QR-Code etwas weißen Rand, damit er zuverlässig gescannt wird.
 
-**Wann fehlt der QR-Code?** Nur wenn das Plugin deaktiviert ist, der Lizenzschlüssel fehlt, abgelaufen oder für die Domain ungültig ist, die Rechnung nicht in EUR ausgestellt ist oder keine gültige IBAN hinterlegt ist. Die Rechnung wird dann unverändert erstellt.
+Automatisch eingefügt wird in HTML-basierten Vorlagen (`.pdf.twig`, `.html.twig`). DOCX-, ODS- und XLSX-Vorlagen werden nicht verändert.
 
 ## Lizenz und Domain
 
@@ -72,12 +82,11 @@ Add an **EPC QR code** (SEPA credit transfer, also known as "GiroCode") to your 
 
 ## Features
 
-- QR code on PDF and HTML invoices, including previews - **no changes to your invoice templates required**
+- Framed "Scan to pay" block right **below the invoice total** - on PDF and HTML invoices, including previews, **no changes to your invoice templates required**
+- Caption in the language of the invoice template (English, German, French, Italian, Spanish, Dutch, Polish, Czech and 21 more, English otherwise)
+- **Bank account per invoice template** - multiple bank accounts out of the box, templates without an IBAN stay unchanged
 - Standard-compliant EPC069-12 version 002 payload, rendered as crisp SVG
-- Bank account configured centrally, with optional **IBAN/BIC per invoice template** (multiple bank accounts)
-- Configurable remittance text (e.g. `Invoice {invoice.number}`), SEPA purpose code and QR size
-- Free placement via the marker `<!-- epc-qr -->` or the Twig variable `invoice['epc_qr.image']`
-- Disabled by default, only active for EUR invoices with a valid IBAN
+- Full control in the template: print the block anywhere, or only the plain QR code and style it yourself
 - Offline license check - no connection to external services
 
 ## Requirements
@@ -101,32 +110,43 @@ No database migration is required. The plugin then shows up in **System > Plugin
 
 ## Configuration
 
-Open **System > Settings > EPC QR-Code**:
+1. **System > Settings > EPC QR-Code**: enter the license key. This is the only global setting.
+2. **Invoices > Templates**: fill in **EPC QR: IBAN** on every template whose invoices should get a QR code (**EPC QR: BIC** is optional).
 
-| Setting | Description |
+That's it. The QR code contains:
+
+| Field | Value |
 | --- | --- |
-| Add EPC QR-Code to invoices | Master switch, off by default |
-| IBAN | Beneficiary account. Can be left blank if the IBAN is set on the invoice template |
-| BIC | Optional (not required for SEPA since 2016) |
-| Creditor name | Blank = name of the invoice issuer from the invoice template |
-| SEPA purpose code | Optional, 4 letters, e.g. `SCVE` for services |
-| Remittance text | `{invoice.number}` is replaced with the invoice number |
-| QR-Code size | In pixel, default 160 |
-| License key | The key from your purchase |
+| Beneficiary | Invoice issuer of the template (company or name), otherwise the template's "Company" field |
+| IBAN / BIC | from the invoice template |
+| Amount | invoice total in EUR |
+| Remittance | invoice number |
 
-**Multiple bank accounts:** under **Invoices > Templates** every template has the fields **EPC QR: IBAN** and **EPC QR: BIC**. When filled, they apply to all invoices created with that template.
+**When is the QR code missing?** When the template has no valid IBAN, the invoice currency is not EUR, or the license key is missing, expired or not valid for the domain. The invoice is then created unchanged.
 
-**Placement:** without further changes the QR code is added at the end of the invoice. Put `<!-- epc-qr -->` where you want it in your Twig template, or print the image yourself:
+## Placement and styling
+
+By default the block is printed right-aligned below the table that holds the invoice total (or at the end of the invoice, if the template has no such table). To change that, edit the Twig template:
+
+**Block at another position** - add this where you want it:
+
+```twig
+{% raw %}{{ invoice['epc_qr.html']|raw }}{% endraw %}
+```
+
+(or the marker `<!-- epc-qr -->`, which is replaced automatically)
+
+**Only the QR code, without frame** - you decide on size, position and caption:
 
 ```twig
 {% raw %}{% if invoice['epc_qr.image'] is not empty %}
-    <img src="{{ invoice['epc_qr.image'] }}" width="160" height="160" alt="EPC QR-Code">
+    <img src="{{ invoice['epc_qr.image'] }}" width="110" height="110" alt="EPC QR-Code">
 {% endif %}{% endraw %}
 ```
 
-The code is injected automatically into HTML-based templates (`.pdf.twig`, `.html.twig`). DOCX, ODS and XLSX templates are not changed.
+As soon as the template prints the block or the QR code itself, the plugin adds nothing automatically. The variables are empty when no QR code is printed. Leave some white space around the QR code so it scans reliably.
 
-**When is the QR code missing?** Only when the plugin is disabled, the license key is missing, expired or not valid for the domain, the invoice currency is not EUR, or no valid IBAN is configured. The invoice is then created unchanged.
+Automatic placement works for HTML-based templates (`.pdf.twig`, `.html.twig`). DOCX, ODS and XLSX templates are not changed.
 
 ## License and domain
 

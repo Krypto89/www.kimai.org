@@ -4,6 +4,6 @@ Compatibility: requires minimum Kimai 2.41.0
 
 - Initial release
 - EPC QR code (EPC069-12 version 002) for PDF and HTML invoices, including previews
-- Global bank account settings with optional IBAN/BIC per invoice template
-- Placement marker `<!-- epc-qr -->` and Twig variable `invoice['epc_qr.image']`
-- Translations: English, German
+- Framed "Scan to pay" block below the invoice total, captions in 29 languages
+- Bank account (IBAN, optional BIC) per invoice template, license key as the only global setting
+- Twig variables `invoice['epc_qr.html']` (framed block) and `invoice['epc_qr.image']` (plain QR code), placement marker `<!-- epc-qr -->`

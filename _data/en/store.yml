@@ -410,6 +410,6 @@ screenshots:
     sententia-epc-qr0:
         description: PDF invoice with the EPC QR code - scan it with any banking app to pay
     sententia-epc-qr1:
-        description: Settings for bank account, remittance text, QR size and license key
+        description: License key - the only global setting
     sententia-epc-qr2:
-        description: Optional IBAN and BIC per invoice template for multiple bank accounts
+        description: IBAN and optional BIC per invoice template

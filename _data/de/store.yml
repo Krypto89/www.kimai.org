@@ -410,6 +410,6 @@ screenshots:
     sententia-epc-qr0:
         description: PDF-Rechnung mit EPC-QR-Code - mit jeder Banking-App scannen und bezahlen
     sententia-epc-qr1:
-        description: Einstellungen für Bankverbindung, Verwendungszweck, QR-Größe und Lizenzschlüssel
+        description: Lizenzschlüssel - die einzige globale Einstellung
     sententia-epc-qr2:
-        description: Optionale IBAN und BIC je Rechnungsvorlage für mehrere Bankkonten
+        description: IBAN und optionaler BIC je Rechnungsvorlage
