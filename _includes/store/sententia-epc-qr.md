@@ -7,7 +7,7 @@ Fügen Sie Ihren Kimai-Rechnungen einen **EPC-QR-Code** (SEPA-Überweisung, auch
 - Beschriftung in der Sprache der Rechnungsvorlage (Deutsch, Englisch, Französisch, Italienisch, Spanisch, Niederländisch, Polnisch, Tschechisch und 21 weitere, sonst Englisch)
 - **Bankkonto je Rechnungsvorlage** – mehrere Bankkonten ohne Zusatzaufwand, Vorlagen ohne IBAN bleiben unverändert
 - Standardkonformer Inhalt nach EPC069-12 Version 002, gestochen scharf als SVG
-- Volle Kontrolle im Template: den Block an beliebiger Stelle ausgeben, oder nur den nackten QR-Code und ihn selbst gestalten
+- Volle Kontrolle im Template: die Karte an beliebiger Stelle ausgeben oder mit QR-Code und Zahlungsdaten als Variablen selbst gestalten
 - Offline-Lizenzprüfung – keine Verbindung zu externen Diensten
 
 ## Voraussetzungen
@@ -43,29 +43,64 @@ Fertig. Der QR-Code enthält:
 | Betrag | Rechnungssumme in EUR |
 | Verwendungszweck | Rechnungsnummer |
 
-**Wann fehlt der QR-Code?** Wenn in der Vorlage keine gültige IBAN steht, die Rechnung nicht in EUR ausgestellt ist oder der Lizenzschlüssel fehlt, abgelaufen oder für die Domain ungültig ist. Die Rechnung wird dann unverändert erstellt.
+**Wann fehlt der QR-Code?** Wenn in der Vorlage keine gültige IBAN steht, die Rechnung nicht in EUR ausgestellt ist, die Summe 0 beträgt oder der Lizenzschlüssel fehlt, abgelaufen oder für die Domain ungültig ist. Die Rechnung wird dann unverändert erstellt.
 
 ## Platzierung und Gestaltung
 
-Ohne Anpassung erscheint der Block rechtsbündig unter der Tabelle mit der Rechnungssumme (bzw. am Ende der Rechnung, wenn die Vorlage keine solche Tabelle hat). Wer es anders möchte, steuert das in der Twig-Vorlage:
+Ohne Anpassung erscheint eine kleine „Scannen und bezahlen“-Karte rechtsbündig unter der Tabelle mit der Rechnungssumme. Der folgende Text (z. B. die Zahlungsbedingungen) läuft links daneben weiter. Die Rechnungsvorlage muss dafür nicht geändert werden.
 
-**Block an anderer Stelle** – an der gewünschten Stelle einfügen:
+Wer die Position oder Gestaltung selbst bestimmen möchte, nutzt die folgenden Variablen in der Twig-Rechnungsvorlage (`.pdf.twig` oder `.html.twig`). Sobald die Vorlage die Karte oder den QR-Code selbst ausgibt, fügt das Plugin die Karte nicht mehr automatisch hinzu.
+
+**Die Karte an anderer Stelle** – an der gewünschten Stelle einfügen:
 
 ```twig
 {% raw %}{{ invoice['epc_qr.html']|raw }}{% endraw %}
 ```
 
-(oder den Marker `<!-- epc-qr -->`, der automatisch ersetzt wird)
+(oder den Marker `<!-- epc-qr -->`, der durch die Karte ersetzt wird)
 
-**Nur der QR-Code, ohne Rahmen** – Größe, Position und Beschriftung bestimmen Sie selbst:
+**Eigene Gestaltung** – der QR-Code und seine Zahlungsdaten stehen als Variablen zur Verfügung:
+
+| Variable | Inhalt | Beispiel |
+| --- | --- | --- |
+| `invoice['epc_qr.image']` | QR-Code als Bild (SVG-Data-URI), für `<img src="...">` | |
+| `invoice['epc_qr.recipient']` | Empfänger | Sententia GmbH |
+| `invoice['epc_qr.iban']` | IBAN in Viererblöcken | AT71 4501 0001 0926 0612 |
+| `invoice['epc_qr.bic']` | BIC, leer wenn in der Vorlage keiner hinterlegt ist | |
+| `invoice['epc_qr.amount']` | Betrag, formatiert wie die Rechnungssumme | 216,00 € |
+| `invoice['epc_qr.reference']` | Verwendungszweck (die Rechnungsnummer) | K2026/00011 |
+| `invoice['epc_qr.html']` | Die fertige Karte | |
+
+Das sind genau die Werte, die im QR-Code stehen – was auf der Rechnung steht, liest auch die Banking-App. Sie stammen nicht aus dem Freitextfeld für die Bankverbindung der Vorlage. Alle Variablen sind leer, wenn kein QR-Code gedruckt wird (keine IBAN in der Vorlage, Rechnung nicht in EUR, Summe 0, keine gültige Lizenz). Umschließen Sie Ihre Gestaltung deshalb mit der Abfrage aus dem Beispiel.
+
+Beispiel – Zahlungsdaten neben dem QR-Code:
 
 ```twig
 {% raw %}{% if invoice['epc_qr.image'] is not empty %}
-    <img src="{{ invoice['epc_qr.image'] }}" width="110" height="110" alt="EPC QR-Code">
+<table style="width: 100%; margin: 0 0 24px 0; border-collapse: collapse;">
+    <tr>
+        <td style="vertical-align: middle; font-size: 9pt; line-height: 14pt;">
+            <strong>Bitte überweisen Sie {{ invoice['epc_qr.amount'] }} an:</strong><br>
+            Empfänger: {{ invoice['epc_qr.recipient'] }}<br>
+            IBAN: {{ invoice['epc_qr.iban'] }}<br>
+            {% if invoice['epc_qr.bic'] is not empty %}BIC: {{ invoice['epc_qr.bic'] }}<br>{% endif %}
+            Verwendungszweck: {{ invoice['epc_qr.reference'] }}
+        </td>
+        <td style="width: 140px; text-align: center; vertical-align: middle;">
+            <img src="{{ invoice['epc_qr.image'] }}" width="110" height="110" alt="EPC QR-Code">
+            <div style="margin-top: 6px; font-size: 7.5pt;">Mit Ihrer Banking-App scannen</div>
+        </td>
+    </tr>
+</table>
 {% endif %}{% endraw %}
 ```
 
-Sobald die Vorlage den Block oder den QR-Code selbst ausgibt, fügt das Plugin nichts mehr automatisch hinzu. Die Variablen sind leer, wenn kein QR-Code gedruckt wird. Lassen Sie um den QR-Code etwas weißen Rand, damit er zuverlässig gescannt wird.
+Hinweise für PDF-Rechnungen (Kimai erstellt sie mit mPDF):
+
+- Für Spalten Tabellen und Inline-Styles verwenden; Flexbox und Grid werden nicht unterstützt.
+- Den QR-Code mindestens 2,5 cm (ca. 95 px) breit drucken.
+- Rund um den Code etwa 3 mm weißen Rand lassen – das Bild selbst hat keinen (die Karte schon).
+- `invoice['epc_qr.payload']` enthält den Rohinhalt des QR-Codes, praktisch zum Prüfen.
 
 Automatisch eingefügt wird in HTML-basierten Vorlagen (`.pdf.twig`, `.html.twig`). DOCX-, ODS- und XLSX-Vorlagen werden nicht verändert.
 
@@ -86,7 +121,7 @@ Add an **EPC QR code** (SEPA credit transfer, also known as "GiroCode") to your 
 - Caption in the language of the invoice template (English, German, French, Italian, Spanish, Dutch, Polish, Czech and 21 more, English otherwise)
 - **Bank account per invoice template** - multiple bank accounts out of the box, templates without an IBAN stay unchanged
 - Standard-compliant EPC069-12 version 002 payload, rendered as crisp SVG
-- Full control in the template: print the block anywhere, or only the plain QR code and style it yourself
+- Full control in the template: print the card anywhere, or design your own with the QR code and its payment data as variables
 - Offline license check - no connection to external services
 
 ## Requirements
@@ -122,29 +157,64 @@ That's it. The QR code contains:
 | Amount | invoice total in EUR |
 | Remittance | invoice number |
 
-**When is the QR code missing?** When the template has no valid IBAN, the invoice currency is not EUR, or the license key is missing, expired or not valid for the domain. The invoice is then created unchanged.
+**When is the QR code missing?** When the template has no valid IBAN, the invoice currency is not EUR, the invoice total is 0, or the license key is missing, expired or not valid for the domain. The invoice is then created unchanged.
 
 ## Placement and styling
 
-By default the block is printed right-aligned below the table that holds the invoice total (or at the end of the invoice, if the template has no such table). To change that, edit the Twig template:
+By default a small "Scan to pay" card is printed right-aligned below the table with the invoice total. The text that follows (e.g. the payment terms) runs to the left of it. The invoice template does not need to be changed.
 
-**Block at another position** - add this where you want it:
+To place or design it yourself, use the variables below in your Twig invoice template (`.pdf.twig` or `.html.twig`). As soon as the template prints the card or the QR code itself, the plugin no longer adds the card automatically.
+
+**The card at another position** - add this where you want it:
 
 ```twig
 {% raw %}{{ invoice['epc_qr.html']|raw }}{% endraw %}
 ```
 
-(or the marker `<!-- epc-qr -->`, which is replaced automatically)
+(or the marker `<!-- epc-qr -->`, which is replaced by the card)
 
-**Only the QR code, without frame** - you decide on size, position and caption:
+**Your own design** - the QR code and its payment data are available as variables:
+
+| Variable | Content | Example |
+| --- | --- | --- |
+| `invoice['epc_qr.image']` | QR code as image (SVG data URI), for `<img src="...">` | |
+| `invoice['epc_qr.recipient']` | Beneficiary | Sententia GmbH |
+| `invoice['epc_qr.iban']` | IBAN in blocks of four | AT71 4501 0001 0926 0612 |
+| `invoice['epc_qr.bic']` | BIC, empty if none is set on the template | |
+| `invoice['epc_qr.amount']` | Amount, formatted like the invoice total | 216,00 € |
+| `invoice['epc_qr.reference']` | Remittance text (the invoice number) | K2026/00011 |
+| `invoice['epc_qr.html']` | The ready-made card | |
+
+These are exactly the values encoded in the QR code - what the invoice shows is what the banking app reads. They do not come from the free-text bank details of the template. All variables are empty when no QR code is printed (no IBAN on the template, invoice not in EUR, total of 0, no valid license), so wrap your design in the check shown below.
+
+Example - payment details next to the QR code:
 
 ```twig
 {% raw %}{% if invoice['epc_qr.image'] is not empty %}
-    <img src="{{ invoice['epc_qr.image'] }}" width="110" height="110" alt="EPC QR-Code">
+<table style="width: 100%; margin: 0 0 24px 0; border-collapse: collapse;">
+    <tr>
+        <td style="vertical-align: middle; font-size: 9pt; line-height: 14pt;">
+            <strong>Please transfer {{ invoice['epc_qr.amount'] }} to:</strong><br>
+            Beneficiary: {{ invoice['epc_qr.recipient'] }}<br>
+            IBAN: {{ invoice['epc_qr.iban'] }}<br>
+            {% if invoice['epc_qr.bic'] is not empty %}BIC: {{ invoice['epc_qr.bic'] }}<br>{% endif %}
+            Reference: {{ invoice['epc_qr.reference'] }}
+        </td>
+        <td style="width: 140px; text-align: center; vertical-align: middle;">
+            <img src="{{ invoice['epc_qr.image'] }}" width="110" height="110" alt="EPC QR-Code">
+            <div style="margin-top: 6px; font-size: 7.5pt;">Scan with your banking app</div>
+        </td>
+    </tr>
+</table>
 {% endif %}{% endraw %}
 ```
 
-As soon as the template prints the block or the QR code itself, the plugin adds nothing automatically. The variables are empty when no QR code is printed. Leave some white space around the QR code so it scans reliably.
+Tips for PDF invoices (Kimai creates them with mPDF):
+
+- Use tables for columns and inline styles; flexbox and grid are not supported.
+- Print the QR code at least 2.5 cm (about 95 px) wide.
+- Leave a white margin of about 3 mm around the code - the image has none of its own (the card has).
+- `invoice['epc_qr.payload']` contains the raw content of the QR code, useful for checking.
 
 Automatic placement works for HTML-based templates (`.pdf.twig`, `.html.twig`). DOCX, ODS and XLSX templates are not changed.
 
