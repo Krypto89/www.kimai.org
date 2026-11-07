@@ -398,7 +398,7 @@ shopping: article
           }'>
             <div class="swiper-wrapper">
                 {% for imageId in screenshots %}
-                    {% assign source = site.data.screenshots[imageId].src %}
+                    {% assign source = site.data.screenshots[imageId][page.lang] | default: site.data.screenshots[imageId].src %}
                     {% assign image = site.data[page.lang].store.screenshots[imageId] %}
                     <div class="swiper-slide store-screenshot-slide pb-3">
                         <figure class="figure store-screenshot-figure">

@@ -273,8 +273,11 @@ leadmetrix-custom-reports1:
 leadmetrix-custom-reports2:
     src: "/images/marketplace/leadmetrix/leadmetrix-custom-reports-2.webp"
 sententia-epc-qr0:
-    src: "/images/marketplace/sententia/epc-qr-scene.webp"
+    src: "/images/marketplace/sententia/epc-qr-scene-en.webp"
+    de: "/images/marketplace/sententia/epc-qr-scene-de.webp"
 sententia-epc-qr1:
-    src: "/images/marketplace/sententia/epc-qr-invoice.webp"
+    src: "/images/marketplace/sententia/epc-qr-invoice-en.webp"
+    de: "/images/marketplace/sententia/epc-qr-invoice-de.webp"
 sententia-epc-qr2:
-    src: "/images/marketplace/sententia/epc-qr-template.webp"
+    src: "/images/marketplace/sententia/epc-qr-template-en.webp"
+    de: "/images/marketplace/sententia/epc-qr-template-de.webp"
