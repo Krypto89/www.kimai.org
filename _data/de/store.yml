@@ -182,6 +182,9 @@ items:
     sententia-epc-qr:
         title: EPC QR-Code für Rechnungen
         intro: Fügt Ihren PDF- und HTML-Rechnungen einen SEPA-QR-Code (GiroCode) zum Bezahlen per Scan hinzu.
+    sententia-recurring-services:
+        title: Wiederkehrende Leistungen
+        intro: Erstellt Zeiteinträge für Hosting, Wartung, Pauschalen und Domains automatisch im richtigen Intervall – ohne Cronjob.
 screenshots:
     expenses-bundle4:
         description: Sie können einen Namen, den Kostenfaktor und einen kurzen Hilfetext für jede Kategorie vergeben
@@ -410,6 +413,12 @@ screenshots:
     sententia-epc-qr0:
         description: PDF-Rechnung mit EPC-QR-Code - mit jeder Banking-App scannen und bezahlen
     sententia-epc-qr1:
-        description: Lizenzschlüssel - die einzige globale Einstellung
+        description: Die „Scannen und bezahlen“-Karte direkt unter der Rechnungssumme
     sententia-epc-qr2:
-        description: IBAN und optionaler BIC je Rechnungsvorlage
+        description: IBAN, optionaler BIC und SEPA-Zahlungszweck je Rechnungsvorlage
+    sententia-recurring-services0:
+        description: Alle wiederkehrenden Leistungen mit Häufigkeit, Betrag und nächster Ausführung
+    sententia-recurring-services1:
+        description: Leistung mit Zeitplan, Platzhaltern in der Beschreibung und Festpreis
+    sententia-recurring-services2:
+        description: Die automatisch erstellten Einträge auf der Rechnung, neben der Projektarbeit

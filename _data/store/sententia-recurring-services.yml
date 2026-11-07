@@ -1,0 +1,13 @@
+developer: sententia
+icon: fas fa-arrows-rotate
+subscription: 49 €
+shop: https://www.sententia.at/kimai-recurring-services/
+payment_methods: sepa
+changelog: true
+tags: [plugin]
+bundle:
+    name: "RecurringServicesBundle"
+screenshots:
+    - sententia-recurring-services0
+    - sententia-recurring-services1
+    - sententia-recurring-services2

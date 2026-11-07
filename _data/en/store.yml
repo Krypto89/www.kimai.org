@@ -182,6 +182,9 @@ items:
     sententia-epc-qr:
         title: EPC QR-Code for Invoices
         intro: Add a scan-to-pay SEPA QR code (GiroCode) to your PDF and HTML invoices.
+    sententia-recurring-services:
+        title: Recurring Services
+        intro: Creates timesheet entries for hosting, maintenance, retainers and domains automatically in the right interval – no cron job.
 screenshots:
     katjaglass-approval-bundle0:
         description: Displays week details like working time, expected time and actions like submit for approval
@@ -410,6 +413,12 @@ screenshots:
     sententia-epc-qr0:
         description: PDF invoice with the EPC QR code - scan it with any banking app to pay
     sententia-epc-qr1:
-        description: License key - the only global setting
+        description: The "Scan to pay" card right below the invoice total
     sententia-epc-qr2:
-        description: IBAN and optional BIC per invoice template
+        description: IBAN, optional BIC and SEPA purpose code per invoice template
+    sententia-recurring-services0:
+        description: All recurring services with frequency, amount and next execution
+    sententia-recurring-services1:
+        description: Service with schedule, description placeholders and fixed rate
+    sententia-recurring-services2:
+        description: The automatically created entries on the invoice, next to the project work

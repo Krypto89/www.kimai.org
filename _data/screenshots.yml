@@ -281,3 +281,12 @@ sententia-epc-qr1:
 sententia-epc-qr2:
     src: "/images/marketplace/sententia/epc-qr-template-en.webp"
     de: "/images/marketplace/sententia/epc-qr-template-de.webp"
+sententia-recurring-services0:
+    src: "/images/marketplace/sententia/recurring-services-list-en.webp"
+    de: "/images/marketplace/sententia/recurring-services-list-de.webp"
+sententia-recurring-services1:
+    src: "/images/marketplace/sententia/recurring-services-edit-en.webp"
+    de: "/images/marketplace/sententia/recurring-services-edit-de.webp"
+sententia-recurring-services2:
+    src: "/images/marketplace/sententia/recurring-services-invoice-en.webp"
+    de: "/images/marketplace/sententia/recurring-services-invoice-de.webp"
