@@ -45,6 +45,8 @@ Fertig. Der QR-Code enthält:
 | Zahlungszweck (SEPA-Code) | optional, aus der Rechnungsvorlage |
 | Verwendungszweck | Rechnungsnummer |
 
+Empfänger und Verwendungszweck werden auf den Zeichensatz reduziert, den jede SEPA-Bank verarbeiten muss (`a-z A-Z 0-9 / - ? : ( ) . , ' +` und Leerzeichen), umgewandelt nach den Empfehlungen der EPC: Umlaute werden zu `ae oe ue ss`, `€` zu `E`, `&` zu `+`, Akzente entfallen, Zeichen ohne Entsprechung werden zum Punkt. So lehnt keine Bank den Code wegen Sonderzeichen ab.
+
 **Wann fehlt der QR-Code?** Wenn in der Vorlage keine gültige IBAN steht, die Rechnung nicht in EUR ausgestellt ist, die Summe 0 beträgt oder der Lizenzschlüssel fehlt, abgelaufen oder für die Domain ungültig ist. Die Rechnung wird dann unverändert erstellt.
 
 **Andere Währungen?** Der EPC-QR-Code (EPC069-12) ist ein Standard für SEPA-Überweisungen und erlaubt ausschließlich Euro – Banking-Apps lehnen Codes mit anderen Währungen ab. Für Rechnungen in CHF, USD, GBP usw. wird deshalb kein QR-Code gedruckt; die Rechnung bleibt unverändert.
@@ -164,6 +166,8 @@ That's it. The QR code contains:
 | Amount | invoice total in EUR (the EPC QR code standard is defined for euro only) |
 | Purpose code | optional, from the invoice template |
 | Remittance | invoice number |
+
+Beneficiary and remittance text are reduced to the character set every SEPA bank must process (`a-z A-Z 0-9 / - ? : ( ) . , ' +` and space), converted as recommended by the EPC: umlauts become `ae oe ue ss`, `€` becomes `E`, `&` becomes `+`, accents are dropped, characters without an equivalent become a full stop. No bank rejects the code because of special characters.
 
 **When is the QR code missing?** When the template has no valid IBAN, the invoice currency is not EUR, the invoice total is 0, or the license key is missing, expired or not valid for the domain. The invoice is then created unchanged.
 
