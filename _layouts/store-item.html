@@ -13,7 +13,8 @@ shopping: article
 {% assign buySubTitle = '' %}
 {% assign purchase_details = nil %}
 {% if developer.purchase_details %}
-    {% assign purchase_details = developer.purchase_details %}
+    {% comment %}either a list, or one list per language (falls back to English){% endcomment %}
+    {% assign purchase_details = developer.purchase_details[page.lang] | default: developer.purchase_details.en | default: developer.purchase_details %}
 {% endif %}
 {% if settings.purchase_details == false %}
     {% assign purchase_details = nil %}
