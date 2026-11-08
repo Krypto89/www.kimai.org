@@ -15,8 +15,9 @@ Legen Sie wiederkehrende Leistungen wie **Webhosting, Wartungsverträge, Support
 ## Voraussetzungen
 
 - Kimai 2.20.0 oder neuer
-- MySQL oder MariaDB mit aktiviertem Event-Scheduler (`event_scheduler = ON`) und geladenen Zeitzonen-Tabellen
+- MySQL oder MariaDB mit aktiviertem Event-Scheduler (`event_scheduler = ON`)
 - Der Datenbankbenutzer von Kimai benötigt das Recht `EVENT`
+- Empfohlen: geladene Zeitzonen-Tabellen der Datenbank (sonst verschieben sich Einträge nach einer Zeitumstellung um eine Stunde)
 - PHP-Erweiterung `sodium` (in PHP standardmäßig enthalten)
 - Ein Lizenzschlüssel für die Domain Ihrer Kimai-Installation (erhalten Sie mit dem Kauf)
 
@@ -32,7 +33,20 @@ bin/console kimai:reload --env=prod
 bin/console kimai:bundle:recurring-services:install --env=prod
 ```
 
-Damit der Event-Scheduler auch nach einem Neustart der Datenbank aktiv bleibt, tragen Sie in der MySQL-/MariaDB-Konfiguration `event_scheduler = ON` ein. Fehlen die Zeitzonen-Tabellen, laden Sie sie einmalig mit `mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root mysql` (bei MariaDB `mariadb-tzinfo-to-sql`).
+Damit der Event-Scheduler auch nach einem Neustart der Datenbank aktiv bleibt, tragen Sie in der MySQL-/MariaDB-Konfiguration `event_scheduler = ON` ein. Die Zeitzonen-Tabellen laden Sie einmalig mit `mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root mysql` (bei MariaDB `mariadb-tzinfo-to-sql`).
+
+## Deinstallation
+
+Die geplanten Events liegen in der Datenbank, nicht im Plugin-Ordner. Entfernen Sie sie **vor** dem Löschen des Plugins, sonst erstellen sie weiter Zeiteinträge:
+
+```bash
+cd /opt/kimai
+bin/console kimai:bundle:recurring-services:uninstall
+rm -rf var/plugins/RecurringServicesBundle
+bin/console kimai:reload --env=prod
+```
+
+Mit `--drop-tables` werden zusätzlich alle Leistungen, die Tabellen und der Lizenzschlüssel gelöscht.
 
 ## Einrichtung
 
@@ -79,8 +93,9 @@ Set up recurring services such as **web hosting, maintenance contracts, support 
 ## Requirements
 
 - Kimai 2.20.0 or newer
-- MySQL or MariaDB with the event scheduler enabled (`event_scheduler = ON`) and time zone tables loaded
+- MySQL or MariaDB with the event scheduler enabled (`event_scheduler = ON`)
 - The database user of Kimai needs the `EVENT` privilege
+- Recommended: database time zone tables loaded (otherwise entries shift by one hour after a daylight saving change)
 - PHP extension `sodium` (included in PHP by default)
 - A license key for the domain of your Kimai installation (included with your purchase)
 
@@ -96,7 +111,20 @@ bin/console kimai:reload --env=prod
 bin/console kimai:bundle:recurring-services:install --env=prod
 ```
 
-To keep the event scheduler running after a database restart, add `event_scheduler = ON` to your MySQL/MariaDB configuration. If the time zone tables are missing, load them once with `mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root mysql` (MariaDB: `mariadb-tzinfo-to-sql`).
+To keep the event scheduler running after a database restart, add `event_scheduler = ON` to your MySQL/MariaDB configuration. Load the time zone tables once with `mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root mysql` (MariaDB: `mariadb-tzinfo-to-sql`).
+
+## Uninstallation
+
+The scheduled events live in the database, not in the plugin directory. Remove them **before** deleting the plugin, otherwise they keep creating timesheet entries:
+
+```bash
+cd /opt/kimai
+bin/console kimai:bundle:recurring-services:uninstall
+rm -rf var/plugins/RecurringServicesBundle
+bin/console kimai:reload --env=prod
+```
+
+With `--drop-tables` all services, the tables and the license key are deleted as well.
 
 ## Setup
 
