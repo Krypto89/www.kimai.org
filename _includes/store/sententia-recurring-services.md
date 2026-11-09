@@ -70,7 +70,7 @@ Ab dem Startdatum erscheint die Leistung zu jedem Termin als normaler Zeiteintra
 
 ## Lizenz und Domain
 
-Der Lizenzschlüssel ist an genau eine (Sub-)Domain Ihrer Kimai-Installation gebunden (z. B. `kimai.example.com`) und ein Jahr gültig. Er verlängert sich automatisch um ein Jahr, sofern er nicht spätestens einen Monat vor Ablauf per E-Mail an office@sententia.at gekündigt wird; mit jeder Verlängerung erhalten Sie einen neuen Schlüssel. Ohne gültigen Schlüssel bleiben alle Leistungen erhalten, es werden aber keine Einträge erstellt.
+Der Lizenzschlüssel ist an genau eine (Sub-)Domain Ihrer Kimai-Installation gebunden (z. B. `kimai.example.com`) und ein Jahr gültig. Er verlängert sich automatisch um ein Jahr, sofern er nicht spätestens einen Monat vor Ablauf per E-Mail an office@sententia.at gekündigt wird; mit jeder Verlängerung erhalten Sie einen neuen Schlüssel. Den neuen Schlüssel erhalten Sie einen Monat vor Ablauf mit der Verlängerungsrechnung. Er gilt sofort und lässt sich mit einem Klick auf den Link in der E-Mail übernehmen. Ab 30 Tage vor Ablauf sehen Administratoren in Kimai einen Hinweis, ab 7 Tage vorher alle Benutzer. Ohne gültigen Schlüssel bleiben alle Leistungen erhalten, es werden aber keine Einträge erstellt. Termine aus dieser Zeit werden auch nach dem Eintragen eines neuen Schlüssels nicht nachgeholt.
 
 ## Support
 
@@ -148,7 +148,7 @@ From the start date on, the service appears on every due date as a regular times
 
 ## License and domain
 
-The license key is bound to exactly one (sub)domain of your Kimai installation (e.g. `kimai.example.com`) and valid for one year. It renews automatically for one year unless canceled by e-mail to office@sententia.at at least one month before it expires; with every renewal you receive a new key. Without a valid key all services are kept, but no entries are created.
+The license key is bound to exactly one (sub)domain of your Kimai installation (e.g. `kimai.example.com`) and valid for one year. It renews automatically for one year unless canceled by e-mail to office@sententia.at at least one month before it expires; with every renewal you receive a new key. You receive the new key with the renewal invoice one month before the license expires. It is valid right away and can be taken over with one click on the link in the e-mail. From 30 days before expiry administrators see a notice in Kimai, from 7 days before all users. Without a valid key all services are kept, but no entries are created. Due dates from that time are not caught up after a new key has been entered.
 
 ## Support
 
